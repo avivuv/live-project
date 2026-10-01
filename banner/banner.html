@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Banner Avivuv</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background:#111;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    /* Font sistem Windows — tidak perlu koneksi internet saat render */
+    font-family:'Segoe UI Variable Display','Segoe UI',system-ui,sans-serif;
+  }
+
+  /* Ukuran resmi banner YouTube */
+  .banner {
+    width:2560px;
+    height:1440px;
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 900px 620px at 26% 44%, rgba(217,119,38,.34), transparent 62%),
+      radial-gradient(ellipse 820px 560px at 76% 60%, rgba(150,40,64,.30), transparent 62%),
+      linear-gradient(118deg, #14090c 0%, #24101a 42%, #180d10 100%);
+    transform-origin: top left;
+  }
+
+  /* Sapuan cahaya diagonal */
+  .sweep {
+    position:absolute; inset:-20%;
+    background:linear-gradient(104deg,
+      transparent 30%,
+      rgba(255,181,92,.09) 46%,
+      rgba(255,214,150,.15) 51%,
+      rgba(255,181,92,.09) 56%,
+      transparent 72%);
+    filter:blur(2px);
+  }
+
+  /* Grid halus */
+  .grid {
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(ellipse 60% 60% at 50% 50%, #000 35%, transparent 78%);
+    -webkit-mask-image:radial-gradient(ellipse 60% 60% at 50% 50%, #000 35%, transparent 78%);
+  }
+
+  .vignette {
+    position:absolute; inset:0;
+    background:radial-gradient(ellipse 74% 74% at 50% 50%, transparent 40%, rgba(0,0,0,.72) 100%);
+  }
+
+  /* SAFE AREA — 1546x423 di tengah, selalu terlihat di semua perangkat */
+  .safe {
+    position:absolute;
+    left:50%; top:50%;
+    transform:translate(-50%,-50%);
+    width:1546px; height:423px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+  }
+
+  .name {
+    font-size:186px;
+    font-weight:800;
+    letter-spacing:-.035em;
+    line-height:.94;
+    background:linear-gradient(180deg,#ffffff 12%,#ffd79a 58%,#e8a24a 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    filter:drop-shadow(0 6px 34px rgba(255,150,40,.32));
+  }
+
+  .rule {
+    width:300px; height:2px;
+    margin:34px 0 26px;
+    background:linear-gradient(90deg, transparent, rgba(255,196,110,.85), transparent);
+  }
+
+  .tagline {
+    font-size:41px;
+    font-weight:300;
+    letter-spacing:.5em;
+    text-indent:.5em;      /* mengimbangi letter-spacing di huruf terakhir */
+    color:rgba(255,255,255,.80);
+    text-transform:uppercase;
+  }
+
+  .games {
+    margin-top:44px;
+    display:flex;
+    align-items:center;
+    gap:26px;
+    font-size:26px;
+    font-weight:600;
+    letter-spacing:.11em;
+    color:rgba(255,214,160,.62);
+    text-transform:uppercase;
+  }
+  .dot { width:7px; height:7px; border-radius:50%; background:rgba(255,190,110,.5); }
+</style>
+</head>
+<body>
+  <div class="banner" id="banner">
+    <div class="sweep"></div>
+    <div class="grid"></div>
+    <div class="vignette"></div>
+
+    <div class="safe">
+      <div class="name">Avivuv</div>
+      <div class="rule"></div>
+      <div class="tagline">Good Game, Well Played</div>
+      <div class="games">
+        <span>Ragnarok: The New World</span>
+        <span class="dot"></span>
+        <span>Genshin Impact</span>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // Skala banner agar muat di layar saat dibuka manual di browser.
+  // Dilewati saat render headless (?raw) supaya PNG keluar 2560x1440 penuh.
+  const RAW = location.search.includes('raw');
+  function fit(){
+    if (RAW) return;
+    const b = document.getElementById('banner');
+    const s = Math.min(window.innerWidth/2560, window.innerHeight/1440) * 0.94;
+    b.style.transform = 'scale('+s+')';
+    b.style.position = 'absolute';
+    b.style.left = ((window.innerWidth  - 2560*s)/2) + 'px';
+    b.style.top  = ((window.innerHeight - 1440*s)/2) + 'px';
+  }
+  fit();
+  addEventListener('resize', fit);
+</script>
+</body>
+</html>

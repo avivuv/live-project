@@ -1,0 +1,21 @@
+Layer,Type,Live2D role,Status
+Face,Character,Head deformation,Reference
+Ear_L/R,Character,Head deformation,Reference
+Hair_Back,Character,Hair physics,Reference
+Hair_Side_L/R,Character,Hair physics,Reference
+Hair_Front,Character,Hair physics,Reference
+EyeWhite_L/R,Face,Eye open/close,Reference
+Iris_L/R,Face,Gaze,Reference
+Pupil_L/R,Face,Gaze,Reference
+Highlights,Face,Eye highlight,Reference
+Brow_L/R,Face,Expression,Reference
+Mouth_Base,Face,Lip sync,Reference
+Mouth_Inside,Face,Lip sync,Reference
+Teeth,Tongue,Expression,Reference
+Neck,Body,Head-body separation,Reference
+Shirt,Jacket,Body physics,Reference
+Accessories,Body,Physics/detail,Reference
+Anemo_Wind,Effect,Animated wind,Reference
+Particles,Effect,Animated particles,Reference
+Glow,Effect,Atmosphere,Reference
+Background,Optional,Scene background,Reference

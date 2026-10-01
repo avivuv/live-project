@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Watermark Avivuv</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  /* Latar transparan — hasil PNG ikut transparan */
+  html, body { background:transparent; }
+
+  body {
+    font-family:'Segoe UI Variable Display','Segoe UI',system-ui,sans-serif;
+  }
+
+  /* Kanvas resmi watermark YouTube */
+  .wm {
+    width:150px;
+    height:150px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  /* Hanya varian aktif yang dirender (?v=a|b|c|d) */
+  .variant { display:none; }
+  .variant.on { display:flex; }
+
+  /* ── Semua varian pakai gradasi gold yang sama dengan banner ── */
+  .gold {
+    background:linear-gradient(165deg, #ffffff 4%, #ffd79a 46%, #e8a24a 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  /* ══ A · Huruf A polos ══════════════════════════════════════ */
+  .a-glyph {
+    font-size:132px;
+    font-weight:800;
+    line-height:1;
+    letter-spacing:-.04em;
+    /* Dua lapis bayangan: kontras di video terang, glow di video gelap */
+    filter:
+      drop-shadow(0 2px 5px rgba(0,0,0,.85))
+      drop-shadow(0 0 22px rgba(255,150,40,.42));
+  }
+
+  /* ══ B & C · digambar sebagai SVG ══════════════════════════
+     Border bergradasi lewat CSS (background-clip ganda) bentrok
+     dengan gradasi teks, jadi bentuknya dibuat dengan SVG stroke. */
+  .svg-wrap {
+    filter:drop-shadow(0 2px 7px rgba(0,0,0,.8));
+  }
+  .svg-wrap svg { display:block; }
+  .svg-glyph {
+    font-family:'Segoe UI Variable Display','Segoe UI',system-ui,sans-serif;
+    font-weight:800;
+    letter-spacing:-.04em;
+  }
+
+  /* ══ D · Monogram AV ═══════════════════════════════════════ */
+  .d-mono {
+    font-size:66px;
+    font-weight:800;
+    line-height:1;
+    letter-spacing:-.07em;
+    filter:
+      drop-shadow(0 2px 5px rgba(0,0,0,.85))
+      drop-shadow(0 0 20px rgba(255,150,40,.40));
+  }
+</style>
+</head>
+<body>
+  <div class="wm">
+    <!-- A · huruf polos -->
+    <div class="variant" data-v="a">
+      <div class="a-glyph gold">A</div>
+    </div>
+
+    <!-- B · cincin -->
+    <div class="variant" data-v="b">
+      <div class="svg-wrap">
+        <svg width="150" height="150" viewBox="0 0 150 150">
+          <defs>
+            <linearGradient id="gB" x1="0" y1="0" x2="0.35" y2="1">
+              <stop offset="0%"   stop-color="#ffffff"/>
+              <stop offset="46%"  stop-color="#ffd79a"/>
+              <stop offset="100%" stop-color="#e8a24a"/>
+            </linearGradient>
+          </defs>
+          <circle cx="75" cy="75" r="68" fill="none"
+                  stroke="url(#gB)" stroke-width="7"/>
+          <text class="svg-glyph" x="75" y="76" font-size="84"
+                fill="url(#gB)" text-anchor="middle"
+                dominant-baseline="central">A</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- C · segi delapan -->
+    <div class="variant" data-v="c">
+      <div class="svg-wrap">
+        <svg width="150" height="150" viewBox="0 0 150 150">
+          <defs>
+            <linearGradient id="gC" x1="0" y1="0" x2="0.35" y2="1">
+              <stop offset="0%"   stop-color="#ffffff"/>
+              <stop offset="46%"  stop-color="#ffd79a"/>
+              <stop offset="100%" stop-color="#e8a24a"/>
+            </linearGradient>
+          </defs>
+          <polygon points="42,7 108,7 143,42 143,108 108,143 42,143 7,108 7,42"
+                   fill="none" stroke="url(#gC)" stroke-width="6"
+                   stroke-linejoin="round"/>
+          <text class="svg-glyph" x="75" y="77" font-size="76"
+                fill="url(#gC)" text-anchor="middle"
+                dominant-baseline="central">A</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- D · monogram -->
+    <div class="variant" data-v="d">
+      <div class="d-mono gold">AV</div>
+    </div>
+  </div>
+
+<script>
+  // Varian dipilih lewat query string, mis. watermark.html?v=c
+  const v = (new URLSearchParams(location.search).get('v') || 'a').toLowerCase();
+  const el = document.querySelector('.variant[data-v="'+v+'"]') ||
+             document.querySelector('.variant[data-v="a"]');
+  el.classList.add('on');
+</script>
+</body>
+</html>
